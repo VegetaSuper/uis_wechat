@@ -60,7 +60,7 @@ onLoad(() => {
 // #endif
 
 // 与config.ts中的颜色配置保持一致
-const activeColor = '#1296db';
+const activeColor = '#1456f0';
 const inactiveColor = '#999999';
 
 function getColorByIndex(index: number) {

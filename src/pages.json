@@ -17,7 +17,7 @@
   "tabBar": {
     "custom": true,
     "color": "#999999",
-    "selectedColor": "#1296db",
+    "selectedColor": "#1456f0",
     "backgroundColor": "#F8F8F8",
     "borderStyle": "black",
     "height": "50px",
@@ -48,7 +48,6 @@
       "path": "pages/index/index",
       "type": "home",
       "style": {
-        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·首页",
         "enablePullDownRefresh": true
       }
@@ -69,7 +68,6 @@
       "path": "pages/my/index",
       "type": "page",
       "style": {
-        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·我的"
       }
     },

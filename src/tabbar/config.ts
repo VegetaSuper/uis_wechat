@@ -45,8 +45,8 @@ export const nativeTabbarList: NativeTabBarItem[] = [
     text: '机会'
   },
   {
-    iconPath: '/static/tabbar/index5.png',
-    selectedIconPath: '/static/tabbar/index5_a.png',
+    iconPath: '/static/tabbar/index4.png',
+    selectedIconPath: '/static/tabbar/index4_a.png',
     pagePath: 'pages/my/index',
     text: '我的'
   }
@@ -92,8 +92,8 @@ export const customTabbarList: CustomTabBarItem[] = [
     pagePath: 'pages/my/index',
     text: '我的',
     iconType: 'image',
-    icon: '/static/tabbar/index5.png',
-    iconActive: '/static/tabbar/index5_a.png'
+    icon: '/static/tabbar/index4.png',
+    iconActive: '/static/tabbar/index4_a.png'
   }
   // 其他类型演示
   // 1、uiLib
@@ -141,8 +141,8 @@ export const TABBAR_THREE: CustomTabBarItem[] = [
     pagePath: 'pages/my/index',
     text: '我的',
     iconType: 'image',
-    icon: '/static/tabbar/index5.png',
-    iconActive: '/static/tabbar/index5_a.png'
+    icon: '/static/tabbar/index4.png',
+    iconActive: '/static/tabbar/index4_a.png'
   }
 ];
 
@@ -172,8 +172,8 @@ export const TABBAR_FOUR: CustomTabBarItem[] = [
     pagePath: 'pages/my/index',
     text: '我的',
     iconType: 'image',
-    icon: '/static/tabbar/index5.png',
-    iconActive: '/static/tabbar/index5_a.png'
+    icon: '/static/tabbar/index4.png',
+    iconActive: '/static/tabbar/index4_a.png'
   }
 ];
 
@@ -210,7 +210,7 @@ const _tabbar: TabBar = {
   // 只有微信小程序支持 custom。App 和 H5 不生效
   custom: selectedTabbarStrategy === TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE,
   color: '#999999',
-  selectedColor: '#1296db',
+  selectedColor: '#1456f0',
   backgroundColor: '#F8F8F8',
   borderStyle: 'black',
   height: '50px',
