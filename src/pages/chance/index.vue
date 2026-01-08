@@ -9,25 +9,14 @@ definePage({
   }
 });
 
-
-
-
-onShow(() => {
-});
-
-
+onShow(() => {});
 
 // 下拉刷新
-onPullDownRefresh(() => {
-});
+onPullDownRefresh(() => {});
 </script>
 
 <template>
-  <view class="h-full flex flex-col">
-
-  </view>
+  <view class="h-full flex flex-col"> </view>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

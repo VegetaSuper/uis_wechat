@@ -22,21 +22,21 @@ export const useUserStore = defineStore(
 
     // 删除用户信息
     const removeUserInfo = () => {
-      userInfo.value = null
+      userInfo.value = null;
     };
 
     // 登录
     async function login(tellphone: string, goIndex: boolean = true): Promise<void> {
       try {
         const res = await loginByTellphone(tellphone);
-        setUserInfo({ ...res, tellphone })
+        setUserInfo({ ...res, tellphone });
 
         setTokenInfo({
           token: res.token,
           expiresIn: 0
         });
-        tabbarStore.setTabbarList()
-        goIndex && uni.switchTab({ url: '/pages/index/index' })
+        tabbarStore.setTabbarList();
+        goIndex && uni.switchTab({ url: '/pages/index/index' });
 
         return Promise.resolve();
       } catch (error) {
@@ -48,7 +48,7 @@ export const useUserStore = defineStore(
       userInfo,
       removeUserInfo,
       setUserInfo,
-      login,
+      login
     };
   },
   {

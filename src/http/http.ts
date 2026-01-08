@@ -4,7 +4,6 @@ import { useTokenStore } from '@/store/token';
 import { currRoute } from '@/utils';
 import { useGlobalToast } from '@/composables/useGlobalToast';
 
-
 export function http<T>(options: CustomRequestOptions) {
   // 1. 返回 Promise 对象
   return new Promise<T>((resolve, reject) => {
@@ -19,7 +18,7 @@ export function http<T>(options: CustomRequestOptions) {
       // 响应成功
       success: async (res) => {
         const resData: IResData<T> = res.data as IResData<T>;
-        
+
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
           let msg = resData.message || '请求错误';
@@ -52,7 +51,6 @@ export function http<T>(options: CustomRequestOptions) {
             toast.error(msg);
             return reject(msg);
           }
-
         }
         if (res.statusCode === 401 || resData.code === 401) {
           const tokenStore = useTokenStore();
@@ -71,8 +69,6 @@ export function http<T>(options: CustomRequestOptions) {
             }
             return reject(res);
           }
-         
-          
         } else {
           // 其他错误 -> 根据后端错误信息轻提示
           !options.hideErrorToast && toast.error((res.data as IResData<T>).message || '请求错误');

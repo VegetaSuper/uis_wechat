@@ -9,7 +9,7 @@ import { IAuthLoginRes } from '@/typings';
 const tokenInfoState = {
   token: '',
   expiresIn: 0
-}
+};
 
 export const useTokenStore = defineStore(
   'token',
@@ -71,14 +71,14 @@ export const useTokenStore = defineStore(
       if (isTokenExpired.value) {
         return '';
       }
-      return tokenInfo.value.token || ''
+      return tokenInfo.value.token || '';
     });
 
     /**
      * 检查是否有登录信息（不考虑token是否过期）
      */
     const hasLoginInfo = computed(() => {
-      return !!tokenInfo.value.token
+      return !!tokenInfo.value.token;
     });
 
     /**

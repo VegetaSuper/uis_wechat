@@ -16,9 +16,7 @@ onShow(() => {
   isCurrentPageTabbar.value = isPageTabbar(path);
 });
 
-onLoad(() => {
-
-});
+onLoad(() => {});
 </script>
 
 <template>

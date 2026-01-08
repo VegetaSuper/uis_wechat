@@ -5,7 +5,7 @@ declare global {
     code: number;
     message: string;
     content: T;
-    success: boolean
+    success: boolean;
   }
 
   interface IRows<T> {

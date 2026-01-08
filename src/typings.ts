@@ -15,17 +15,16 @@ export interface IUniUploadFileOptions {
 }
 
 export interface IWechatInitResult {
-  openid: string,
-  session_key: string
+  openid: string;
+  session_key: string;
 }
 
 export interface IListResult<T> {
-  list: T[],
-  page: number,
-  size: number,
-  total: number
+  list: T[];
+  page: number;
+  size: number;
+  total: number;
 }
-
 
 /**
  * 登录返回的信息，其实就是 token 信息

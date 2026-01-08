@@ -3,8 +3,8 @@ import { useTokenStore } from '@/store/token';
 import { getEnvBaseUrl } from '@/utils';
 import { platform } from '@/utils/platform';
 import { stringifyQuery } from './tools/queryString';
-import { Encrypt } from '@/utils/secret'
-import { md5 } from 'js-md5'
+import { Encrypt } from '@/utils/secret';
+import { md5 } from 'js-md5';
 import { useUserStore } from '@/store';
 
 // 请求基准地址
@@ -53,17 +53,17 @@ const httpInterceptor = {
     const { getValidToken } = useTokenStore();
     if (getValidToken) {
       options.header.token = getValidToken;
-      const { secure } = options.header
+      const { secure } = options.header;
       if (secure === 'true') {
-        const { userInfo } = useUserStore()
-        const randomKey = new Date().getTime() + ''
-        const sign = md5(randomKey + userInfo?.loginName)
-        options.header.randomKey = randomKey
-        options.header.sign = sign
+        const { userInfo } = useUserStore();
+        const randomKey = new Date().getTime() + '';
+        const sign = md5(randomKey + userInfo?.loginName);
+        options.header.randomKey = randomKey;
+        options.header.sign = sign;
 
         if (options.method === 'POST') {
-          const dataStr = JSON.stringify(options.data)
-          options.data = { detail: Encrypt(dataStr, userInfo?.longitude, userInfo?.latitude) }
+          const dataStr = JSON.stringify(options.data);
+          options.data = { detail: Encrypt(dataStr, userInfo?.longitude, userInfo?.latitude) };
         }
       }
     }

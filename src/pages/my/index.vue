@@ -8,15 +8,10 @@ definePage({
 });
 
 const userStore = useUserStore();
-
-
 </script>
 
 <template>
-  <view class="page-container">
-    
-  </view>
+  <view class="page-container"> </view>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

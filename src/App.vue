@@ -2,11 +2,11 @@
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
 import { navigateToInterceptor } from '@/router/interceptor';
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
-import { useAppStore } from '@/store'
+import { useAppStore } from '@/store';
 
 onLaunch(async (options) => {
   console.log('App Launch', options);
-  await useAppStore().setSessionKey()
+  await useAppStore().setSessionKey();
 });
 onShow((options) => {
   console.log('App Show', options);
