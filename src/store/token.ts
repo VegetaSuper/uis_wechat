@@ -1,9 +1,9 @@
-import type { IAuthLoginRes } from '@/api/types/login';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue'; // 修复：导入 computed
 import { logout as _logout } from '@/api/login';
 import { useUserStore } from './user';
 import { LOGIN_PAGE } from '@/router/config';
+import { IAuthLoginRes } from '@/typings';
 
 // 初始化状态
 const tokenInfoState = {

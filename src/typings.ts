@@ -14,18 +14,30 @@ export interface IUniUploadFileOptions {
   formData?: any;
 }
 
-// 高德地图选址
-export interface AmapPickData {
-  address: string;
-  city: string;
-  citycode: string;
-  district: string;
-  adcode: string;
-  id: string;
-  location: string;
-  name: string;
-  province: string;
-  pcode: string;
-  finallyAddress?: string;
-  lngLat?: string[];
+export interface IWechatInitResult {
+  openid: string,
+  session_key: string
+}
+
+export interface IListResult<T> {
+  list: T[],
+  page: number,
+  size: number,
+  total: number
+}
+
+
+/**
+ * 登录返回的信息，其实就是 token 信息
+ */
+export type IAuthLoginRes = {
+  token: string;
+  expiresIn: number; // 有效期(秒)
+};
+
+/**
+ * 用户信息
+ */
+export interface IUserInfoRes {
+  [key: string]: any; // 允许其他扩展字段
 }

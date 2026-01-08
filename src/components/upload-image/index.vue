@@ -56,7 +56,7 @@ const customUpload: UploadMethod = (file, formData, options) => {
 
   const uploadTask = uni.uploadFile({
     url: getEnvBaseUploadUrl(),
-    header: { Authorization: getValidToken },
+    header: { token: getValidToken },
     name: options.name,
     fileName: options.name,
     fileType: options.fileType,

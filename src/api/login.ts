@@ -1,5 +1,5 @@
-import type { IAuthLoginRes } from './types/login';
 import { http } from '@/http/http';
+import { IAuthLoginRes } from '@/typings';
 
 
 /**
@@ -8,7 +8,7 @@ import { http } from '@/http/http';
  * @returns 
  */
 export function loginByTellphone(tellphone: string) {
-  return http.post<IAuthLoginRes>('/system/user/wechatLogin', { tellphone });
+  return http.post<IAuthLoginRes>('/system/user/wechatLogin', { tellphone }, undefined, { secure: 'false' });
 }
 
 /**

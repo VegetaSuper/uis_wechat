@@ -3,6 +3,9 @@ import { useTokenStore } from '@/store/token';
 import { getEnvBaseUrl } from '@/utils';
 import { platform } from '@/utils/platform';
 import { stringifyQuery } from './tools/queryString';
+import { Encrypt } from '@/utils/secret'
+import { md5 } from 'js-md5'
+import { useUserStore } from '@/store';
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl();
@@ -42,12 +45,27 @@ const httpInterceptor = {
     // 2. （可选）添加小程序端请求头标识
     options.header = {
       platform, // 可选，与 uniapp 定义的平台一致，告诉后台来源
+      secure: 'true', // 参数不加密
+      locale: 'zh-cn',
       ...options.header
     };
     // 3. 添加 token 请求头标识
     const { getValidToken } = useTokenStore();
     if (getValidToken) {
-      options.header.authorization = getValidToken;
+      options.header.token = getValidToken;
+      const { secure } = options.header
+      if (secure === 'true') {
+        const { userInfo } = useUserStore()
+        const randomKey = new Date().getTime() + ''
+        const sign = md5(randomKey + userInfo?.loginName)
+        options.header.randomKey = randomKey
+        options.header.sign = sign
+
+        if (options.method === 'POST') {
+          const dataStr = JSON.stringify(options.data)
+          options.data = { detail: Encrypt(dataStr, userInfo?.longitude, userInfo?.latitude) }
+        }
+      }
     }
   }
 };

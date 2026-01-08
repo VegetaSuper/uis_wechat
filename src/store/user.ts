@@ -1,9 +1,9 @@
-import type { IUserInfoRes } from '@/api/types/login';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { loginByTellphone } from '@/api/login';
 import { useTokenStore } from './token';
 import { tabbarStore } from '@/tabbar/store';
+import { IUserInfoRes } from '@/typings';
 
 // 默认头像
 

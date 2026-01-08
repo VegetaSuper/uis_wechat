@@ -26,7 +26,7 @@ export function Encrypt(word: string, keyStr: string, ivStr: string): string {
   const srcs = CryptoJS.enc.Utf8.parse(word)
 
   // 执行 AES 加密
-  const encrypted = CryptoJS.AES.encrypt(srcs, key, {
+  const encrypted = CryptoJS.AES.encrypt(word, key, {
     iv,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.ZeroPadding,

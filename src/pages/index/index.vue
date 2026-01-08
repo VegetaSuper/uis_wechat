@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { getAnnouncementApi } from '@/api/home';
+
 defineOptions({
   name: 'Home'
 });
@@ -11,6 +13,10 @@ definePage({
   }
 });
 
+onShow(async () => {
+  const data = await getAnnouncementApi()
+  console.log('getAnnouncementApi', data);
+})
 </script>
 
 <template>
