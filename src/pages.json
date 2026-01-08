@@ -1,0 +1,99 @@
+{
+  "globalStyle": {
+    "navigationStyle": "default",
+    "navigationBarTitleText": "嘉盛石化",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f7f7"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^fg-(.*)": "@/components/fg-$1/fg-$1.vue",
+      "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue",
+      "^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)": "z-paging/components/z-paging$1/z-paging$1.vue"
+    }
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#F8F8F8",
+    "borderStyle": "black",
+    "height": "50px",
+    "fontSize": "10px",
+    "iconWidth": "24px",
+    "spacing": "3px",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index"
+      },
+      {
+        "text": "我的任务",
+        "pagePath": "pages/task/index"
+      },
+      {
+        "text": "机会",
+        "pagePath": "pages/chance/index"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/my/index"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "type": "home",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "嘉盛石化·首页",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/chance/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "嘉盛石化·机会",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "type": "page"
+    },
+    {
+      "path": "pages/my/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "嘉盛石化·我的"
+      }
+    },
+    {
+      "path": "pages/task/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "嘉盛石化·我的任务",
+        "enablePullDownRefresh": true
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages-sub",
+      "pages": [
+        {
+          "path": "demo/index",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "分包页面"
+          }
+        }
+      ]
+    }
+  ]
+}
