@@ -50,8 +50,8 @@ const httpInterceptor = {
       ...options.header
     };
     // 3. 添加 token 请求头标识
-    const { getValidToken } = useTokenStore();
-    if (getValidToken) {
+    const { hasLogin, getValidToken } = useTokenStore();
+    if (hasLogin) {
       options.header.token = getValidToken;
       const { secure } = options.header;
       if (secure === 'true') {

@@ -1,7 +1,7 @@
 import type { CustomRequestOptions } from '@/http/types';
 import { LOGIN_PAGE } from '@/router/config';
 import { useTokenStore } from '@/store/token';
-import { currRoute } from '@/utils';
+import { currRoute, uniNavigateTo } from '@/utils';
 import { useGlobalToast } from '@/composables/useGlobalToast';
 
 export function http<T>(options: CustomRequestOptions) {
@@ -37,10 +37,8 @@ export function http<T>(options: CustomRequestOptions) {
                 await tokenStore.logout();
                 const { path: currentPath } = currRoute();
                 if (currentPath !== LOGIN_PAGE) {
-                  uni.navigateTo({
-                    url: LOGIN_PAGE,
-                    complete: () => tokenStore.setIsLoggingOut(false)
-                  });
+                  await uniNavigateTo(LOGIN_PAGE)
+                  tokenStore.setIsLoggingOut(false)
                 } else {
                   // 已在登录页，直接解锁
                   tokenStore.setIsLoggingOut(false);
@@ -60,10 +58,8 @@ export function http<T>(options: CustomRequestOptions) {
             tokenStore.logout();
             const { path: currentPath } = currRoute();
             if (currentPath !== LOGIN_PAGE) {
-              uni.navigateTo({
-                url: LOGIN_PAGE,
-                complete: () => tokenStore.setIsLoggingOut(false)
-              });
+              await uniNavigateTo(LOGIN_PAGE)
+              tokenStore.setIsLoggingOut(false)
             } else {
               tokenStore.setIsLoggingOut(false);
             }

@@ -17,3 +17,5 @@ export default store;
 export * from './app';
 export * from './theme';
 export * from './user';
+export * from './query';
+

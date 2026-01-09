@@ -72,6 +72,22 @@
       }
     },
     {
+      "path": "pages/notice/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "嘉盛石化·公告",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/task/add",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "嘉盛石化·发起审批",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
       "path": "pages/task/index",
       "type": "page",
       "style": {

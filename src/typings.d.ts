@@ -1,6 +1,8 @@
 // 全局要用的类型放到这里
 
 declare global {
+  type Recordable<T = any> = Record<string, T>
+
   interface IResData<T> {
     code: number;
     message: string;
