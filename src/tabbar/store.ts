@@ -4,6 +4,7 @@ import { reactive } from 'vue';
 import { FG_LOG_ENABLE } from '@/router/interceptor';
 import { customTabbarEnable, TABBAR_FOUR, TABBAR_THREE } from './config';
 import { useUserStore } from '@/store';
+import { currRoute } from '@/utils';
 
 const BULGE_ENABLE = false;
 
@@ -97,7 +98,12 @@ const tabbarStore = reactive({
 
     tabbarList.length = 0;
     tabbarList.push(...newTabbarList);
-
+    const { path } = currRoute();
+    const index = tabbarList.findIndex((item) => item.pagePath === path)
+    if (index > -1) {
+      this.setCurIdx(index);
+      return
+    }
     const safeIdx = Math.min(this.curIdx, tabbarList.length - 1);
     this.setCurIdx(safeIdx);
   }

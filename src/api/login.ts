@@ -1,5 +1,5 @@
 import { http } from '@/http/http';
-import { IAuthLoginRes } from '@/typings';
+import { IUserInfoRes } from '@/typings';
 
 /**
  * 使用手机号码登录
@@ -7,7 +7,16 @@ import { IAuthLoginRes } from '@/typings';
  * @returns
  */
 export function loginByTellphone(tellphone: string) {
-  return http.post<IAuthLoginRes>('/system/user/wechatLogin', { tellphone }, undefined, { secure: 'false' });
+  return http.post<IUserInfoRes>('/system/user/wechatLogin', { tellphone }, undefined, { secure: 'false' });
+}
+
+/**
+ * 使用userId获取用户详情
+ * @param id 
+ * @returns 
+ */
+export function getUserDetailApi(id) {
+  return http.post<IUserInfoRes>('/system/user/detail', { id });
 }
 
 /**

@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { ensureDecodeURIComponent } from '@/utils';
 import { tabbarList } from '@/tabbar/config';
-import lightLogo from '@/static/images/login/light-logo.png';
-import darkLogo from '@/static/images/login/dark-logo.png';
-import { useAppStore, useThemeStore, useUserStore } from '@/store';
+import { useAppStore, useUserStore } from '@/store';
 import { decryptWXBizData } from '@/utils/secret';
+import Logo from '@/components/logo/index.vue';
 
 defineOptions({
   name: 'Login'
@@ -27,15 +26,6 @@ onLoad((options) => {
   }
 });
 
-const themeStore = useThemeStore();
-
-const themeLogo = computed(() => {
-  if (themeStore.theme === 'dark') {
-    return darkLogo;
-  }
-  return lightLogo;
-});
-
 const appStore = useAppStore();
 
 const { login } = useUserStore();
@@ -52,7 +42,7 @@ async function getPhoneNumber(e) {
 <template>
   <view class="flex flex-col justify-center items-center px-10%">
     <wd-navbar fixed placeholder title="嘉盛石化·登录" safeAreaInsetTop></wd-navbar>
-    <cover-image :src="themeLogo"></cover-image>
+    <Logo class="mt-20rpx"></Logo>
     <text class="text-primary mt-20rpx mb-100rpx">欢迎登录嘉盛石化</text>
     <view class="indent-72rpx text-36rpx">
       本小程序（嘉胜石化）仅限上海嘉胜石油化工有限公司<text class="text-primary">内部员工</text

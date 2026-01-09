@@ -1,5 +1,4 @@
 import { useQueryStore } from '@/store'
-import { getSystemCacheQueryApi } from '@/api/common'
 import { SYSTEM_CACHE_QUERY } from '@/enums/query'
 
 /**
@@ -8,25 +7,10 @@ import { SYSTEM_CACHE_QUERY } from '@/enums/query'
 export function useCacheQuery(...args: SYSTEM_CACHE_QUERY[]) {
   const res: Ref<Recordable> = ref({})
   return (() => {
-    args.forEach((queryKey) => {
+    args.forEach(async (queryKey) => {
       res.value[queryKey] = []
-      const data = useQueryStore().getSystemCacheQuery(queryKey)
-      if (data) {
-        res.value[queryKey] = data
-      } else {
-        getSystemCacheQueryApi(queryKey).then((result) => {
-          res.value[queryKey] = result.map((item) => {
-            // 可扩展
-            return {
-              value: item.id,
-              label: item.name,
-              name: item.name,
-              nameEn: item.nameEn,
-            }
-          })
-          useQueryStore().setQuery(queryKey, res.value[queryKey])
-        })
-      }
+      const data = await useQueryStore().getSystemCacheQuery(queryKey)
+      res.value[queryKey] = data
     })
     return toRefs(res.value)
   })()

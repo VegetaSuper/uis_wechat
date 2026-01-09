@@ -1,15 +1,31 @@
 import { defineStore } from 'pinia';
 import { SYSTEM_CACHE_QUERY } from '@/enums/query'
+import { getSystemCacheQueryApi } from '@/api/common';
+import { ICacheUuery } from '@/typings';
+
 
 export const useQueryStore = defineStore('query', () => {
 
-  const systemCacheQuery: Ref<Map<SYSTEM_CACHE_QUERY, any[]>> = ref(new Map())
+  const systemCacheQuery: Ref<Map<SYSTEM_CACHE_QUERY, ICacheUuery[]>> = ref(new Map())
 
-  function getSystemCacheQuery(key: SYSTEM_CACHE_QUERY, type: 'list' | 'map' = 'list') {
+  async function getSystemCacheQuery(key: SYSTEM_CACHE_QUERY, type: 'list' | 'map' = 'list') {
     if (!key) return null
-    const list = systemCacheQuery.value.get(key)
+    let list = systemCacheQuery.value.get(key)
+    if (!list) {
+      list = await getSystemCacheQueryApi(key)
+      list = list.map(item => {
+        // 可扩展
+        return {
+          value: item.id,
+          label: item.name,
+          name: item.name,
+          nameEn: item.nameEn,
+        }
+      })
+      setQuery(key, list)
+    }
     if (type === 'map') {
-      const data = new Map()
+      const data: Map<any, ICacheUuery> = new Map()
       list.forEach(item => {
         data.set(item.value, item)
       })
