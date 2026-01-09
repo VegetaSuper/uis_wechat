@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { getAnnouncementApi } from '@/api/home';
 import { useThemeStore } from '@/store';
+import { uniNavigateTo } from '@/utils';
 
 defineOptions({
   name: 'Home'
@@ -24,12 +25,12 @@ const noticeColor = computed(() => {
   return '#000'
 })
 
-const message = ref('这是一条消息提示信息，这是一条消息提示信息，这是一条消息提示信息');
+const message = ref('');
 
 onShow(async () => {
   const data = await getAnnouncementApi();
   if (data && data.list) {
-    // message.value = data.list[0]?.topic;
+    message.value = data.list[0]?.topic;
   }
 });
 
@@ -70,6 +71,11 @@ function goPage(item: IModule) {
   }
   uni.navigateTo({ url: item.path });
 }
+
+async function goNotice() {
+  await uniNavigateTo('/pages/notice/index')
+}
+
 </script>
 
 <template>
@@ -77,7 +83,7 @@ function goPage(item: IModule) {
     <wd-navbar fixed placeholder title="嘉盛石化·首页" safeAreaInsetTop></wd-navbar>
     <!-- 滚动公告 -->
     <view class="notice-bar">
-      <wd-notice-bar custom-class="rounded-0! text-24rpx!" :text="message" :color="noticeColor" background-color="transparent">
+      <wd-notice-bar custom-class="rounded-0! text-24rpx!" :text="message" :color="noticeColor" background-color="transparent" @click="goNotice">
         <template #prefix>公告：</template>
       </wd-notice-bar>
     </view>
