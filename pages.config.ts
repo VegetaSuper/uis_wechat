@@ -9,6 +9,7 @@ export default defineUniPages({
     navigationBarTextStyle: 'black',
     backgroundColor: '#f7f7f7',
   },
+  darkmode: true,
   easycom: {
     autoscan: true,
     custom: {

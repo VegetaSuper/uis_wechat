@@ -2,11 +2,12 @@ import type { ConfigProviderThemeVars } from 'wot-design-uni';
 
 import { defineStore } from 'pinia';
 
+type Theme = 'light' | 'dark'
 export const useThemeStore = defineStore(
   'theme-store',
   () => {
     /** 主题 */
-    const theme = ref<'light' | 'dark'>('light');
+    const theme = ref<Theme>('light');
 
     /** 主题变量 */
     const themeVars = ref<ConfigProviderThemeVars>({
@@ -21,8 +22,8 @@ export const useThemeStore = defineStore(
     };
 
     /** 切换主题 */
-    const toggleTheme = () => {
-      theme.value = theme.value === 'light' ? 'dark' : 'light';
+    const setTheme = (value: string = 'light') => {
+      theme.value = value as Theme;
     };
 
     const overflowHidden = ref<boolean>(false);
@@ -35,8 +36,8 @@ export const useThemeStore = defineStore(
     return {
       /** 设置主题变量 */
       setThemeVars,
-      /** 切换主题 */
-      toggleTheme,
+      /** 设置主题 */
+      setTheme,
       /** 主题变量 */
       themeVars,
       /** 主题 */

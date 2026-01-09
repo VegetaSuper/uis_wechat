@@ -211,6 +211,16 @@ export function uniNavigateTo(url: string, options?: any) {
 }
 
 /**
+ * 返回
+ * @param delta 
+ */
+export function uniNavigateBack(delta: number = 1) {
+  uni.navigateBack({
+    delta
+  })
+}
+
+/**
  * 表单校验
  * @param formEl 表单
  * @param prop 表单字段

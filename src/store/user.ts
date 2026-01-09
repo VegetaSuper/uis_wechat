@@ -10,7 +10,7 @@ import { IUserInfoRes } from '@/typings';
 export const useUserStore = defineStore(
   'user',
   () => {
-    const { setTokenInfo } = useTokenStore();
+    const tokenStore = useTokenStore();
 
     // 定义用户信息
     const userInfo = ref<IUserInfoRes>(null);
@@ -31,9 +31,9 @@ export const useUserStore = defineStore(
         const res = await loginByTellphone(tellphone);
         setUserInfo({ ...res, tellphone });
 
-        setTokenInfo({
+        tokenStore.setTokenInfo({
           token: res.token,
-          expiresIn: 0
+          expiresIn: 60 * 60
         });
         tabbarStore.setTabbarList();
         goIndex && uni.switchTab({ url: '/pages/index/index' });
@@ -48,7 +48,7 @@ export const useUserStore = defineStore(
       userInfo,
       removeUserInfo,
       setUserInfo,
-      login
+      login,
     };
   },
   {

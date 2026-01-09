@@ -2,10 +2,12 @@
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
 import { navigateToInterceptor } from '@/router/interceptor';
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
-import { useAppStore } from '@/store';
+import { useAppStore, useThemeStore } from '@/store';
+import { systemInfo } from './utils/systemInfo';
 
 onLaunch(async (options) => {
   console.log('App Launch', options);
+  useThemeStore().setTheme(systemInfo?.theme);
   await useAppStore().setSessionKey();
 });
 onShow((options) => {
@@ -20,6 +22,10 @@ onShow((options) => {
 });
 onHide(() => {
   console.log('App Hide');
+});
+
+onThemeChange(({ theme }) => {
+  useThemeStore().setTheme(theme);
 });
 </script>
 

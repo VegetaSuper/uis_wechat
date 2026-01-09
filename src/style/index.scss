@@ -4,9 +4,20 @@
 :root,
 page {
   // 修改按主题色
-  --wot-color-theme: #1456f0;
+  --wot-color-theme: #1296db;
+  --wot-navbar-title-font-weight: 400;
   background-color: #f7f7f7;
   color: #333;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  page {
+    // 修改按主题色
+    --wot-color-theme: #1296db;
+    background-color: #1f1f1f;
+    color: #fff;
+  }
 }
 
 .page-container {
@@ -15,6 +26,23 @@ page {
   box-sizing: border-box;
   overflow: auto;
 }
+
+.wd-navbar__content {
+  display: flex;
+  align-items: center;
+  .wd-navbar__left {
+    position: static;
+    padding-right: 0;
+    .wd-navbar__arrow {
+      margin-right: 12px;
+    }
+  }
+  .wd-navbar__title {
+    margin: 0!important;
+    text-align: left!important;
+  }
+}
+
 
 /*
 border-t-1

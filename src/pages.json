@@ -6,6 +6,7 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f7f7f7"
   },
+  "darkmode": true,
   "easycom": {
     "autoscan": true,
     "custom": {
@@ -17,7 +18,7 @@
   "tabBar": {
     "custom": true,
     "color": "#999999",
-    "selectedColor": "#1456f0",
+    "selectedColor": "#1296db",
     "backgroundColor": "#F8F8F8",
     "borderStyle": "black",
     "height": "50px",
@@ -48,6 +49,7 @@
       "path": "pages/index/index",
       "type": "home",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·首页",
         "enablePullDownRefresh": true
       }
@@ -56,18 +58,24 @@
       "path": "pages/chance/index",
       "type": "page",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·机会",
         "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/login/index",
-      "type": "page"
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "嘉盛石化·登录"
+      }
     },
     {
       "path": "pages/my/index",
       "type": "page",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·我的"
       }
     },
@@ -75,6 +83,7 @@
       "path": "pages/notice/index",
       "type": "page",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·公告",
         "enablePullDownRefresh": true
       }
@@ -83,6 +92,7 @@
       "path": "pages/task/add",
       "type": "page",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·发起审批",
         "enablePullDownRefresh": true
       }
@@ -91,6 +101,7 @@
       "path": "pages/task/index",
       "type": "page",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "嘉盛石化·我的任务",
         "enablePullDownRefresh": true
       }

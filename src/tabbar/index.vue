@@ -60,7 +60,7 @@ onLoad(() => {
 // #endif
 
 // 与config.ts中的颜色配置保持一致
-const activeColor = '#1456f0';
+const activeColor = '#1296db';
 const inactiveColor = '#999999';
 
 function getColorByIndex(index: number) {
@@ -78,14 +78,14 @@ function getImageByIndex(index: number, item: CustomTabBarItem) {
 
 <template>
   <view v-if="customTabbarEnable" class="h-50px pb-safe">
-    <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
+    <view class="tabbar-container" @touchmove.stop.prevent>
       <view class="h-50px flex items-center">
         <!-- 从tabbarStore中获取动态列表 -->
         <view
           v-for="(item, index) in tabbarList"
           :key="item.pagePath || index"
           class="flex flex-1 flex-col items-center justify-center"
-          :style="{ color: getColorByIndex(index) }"
+          :class="tabbarStore.curIdx === index && 'text-primary'"
           @click="handleClick(index)"
         >
           <view v-if="item.isBulge" class="relative">
@@ -136,15 +136,22 @@ function getImageByIndex(index: number, item: CustomTabBarItem) {
 </template>
 
 <style scoped lang="scss">
-.border-and-fixed {
+.tabbar-container {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-
   border-top: 1px solid #eee;
   box-sizing: border-box;
+  background-color: #fff;
 }
+
+@media (prefers-color-scheme: dark) {
+  .tabbar-container {
+    background-color: #131313;
+  }
+}
+
 // 中间鼓包的样式
 .bulge {
   position: absolute;

@@ -49,22 +49,23 @@ const httpInterceptor = {
       locale: 'zh-cn',
       ...options.header
     };
-    // 3. 添加 token 请求头标识
-    const { hasLogin, getValidToken } = useTokenStore();
-    if (hasLogin) {
-      options.header.token = getValidToken;
-      const { secure } = options.header;
-      if (secure === 'true') {
-        const { userInfo } = useUserStore();
-        const randomKey = new Date().getTime() + '';
-        const sign = md5(randomKey + userInfo?.loginName);
-        options.header.randomKey = randomKey;
-        options.header.sign = sign;
+    const { secure } = options.header;
 
-        if (options.method === 'POST') {
-          const dataStr = JSON.stringify(options.data);
-          options.data = { detail: Encrypt(dataStr, userInfo?.longitude, userInfo?.latitude) };
-        }
+    if (secure === 'true') {
+      const { hasLogin, getValidToken } = useTokenStore();
+      
+      if (hasLogin) {
+        options.header.token = getValidToken;
+      }
+      const { userInfo } = useUserStore();
+      const randomKey = new Date().getTime() + '';
+      const sign = md5(randomKey + userInfo?.loginName);
+      options.header.randomKey = randomKey;
+      options.header.sign = sign;
+
+      if (options.method === 'POST') {
+        const dataStr = JSON.stringify(options.data);
+        options.data = { detail: Encrypt(dataStr, userInfo?.longitude, userInfo?.latitude) };
       }
     }
   }

@@ -134,6 +134,7 @@
       "minified": true
     },
     "usingComponents": true,
+    "darkmode": true,
     "optimization": {
       "subPackages": true
     },

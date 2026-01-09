@@ -33,8 +33,7 @@ export function http<T>(options: CustomRequestOptions) {
                 // 清理用户信息，跳转到登录页
                 // 设置退出状态为true（加锁）
                 tokenStore.setIsLoggingOut(true);
-
-                await tokenStore.logout();
+                tokenStore.logout();
                 const { path: currentPath } = currRoute();
                 if (currentPath !== LOGIN_PAGE) {
                   await uniNavigateTo(LOGIN_PAGE)

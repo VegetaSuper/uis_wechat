@@ -10,6 +10,13 @@ defineOptions({
   name: 'Login'
 });
 
+definePage({
+  style: {
+    navigationStyle: 'custom',
+    navigationBarTitleText: '嘉盛石化·登录'
+  }
+});
+
 const redirectUrl = ref('');
 
 onLoad((options) => {
@@ -44,6 +51,7 @@ async function getPhoneNumber(e) {
 
 <template>
   <view class="flex flex-col justify-center items-center px-10%">
+    <wd-navbar fixed placeholder title="嘉盛石化·登录" safeAreaInsetTop></wd-navbar>
     <cover-image :src="themeLogo"></cover-image>
     <text class="text-primary mt-20rpx mb-100rpx">欢迎登录嘉盛石化</text>
     <view class="indent-72rpx text-36rpx">

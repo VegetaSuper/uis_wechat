@@ -11,13 +11,6 @@ export function loginByTellphone(tellphone: string) {
 }
 
 /**
- * 退出登录
- */
-export function logout() {
-  return http.post<void>('/logout');
-}
-
-/**
  * 获取微信登录凭证
  * @returns
  */
