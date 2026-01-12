@@ -4,6 +4,7 @@ import { tabbarList } from '@/tabbar/config';
 import { useAppStore, useUserStore } from '@/store';
 import { decryptWXBizData } from '@/utils/secret';
 import Logo from '@/components/logo/index.vue';
+import CustomNavbar from '@/components/custom-navbar/index.vue';
 
 defineOptions({
   name: 'Login'
@@ -41,7 +42,7 @@ async function getPhoneNumber(e) {
 
 <template>
   <view class="flex flex-col justify-center items-center px-10%">
-    <wd-navbar fixed placeholder title="嘉盛石化·登录" safeAreaInsetTop></wd-navbar>
+    <CustomNavbar fixed placeholder title="嘉盛石化·登录" safeAreaInsetTop></CustomNavbar>
     <Logo class="mt-20rpx"></Logo>
     <text class="text-primary mt-20rpx mb-100rpx">欢迎登录嘉盛石化</text>
     <view class="indent-72rpx text-36rpx">

@@ -5,6 +5,7 @@ import { SYSTEM_CACHE_QUERY } from '@/enums/query';
 import { getUserDetailApi } from '@/api/login';
 import type { ICacheUuery } from '@/typings';
 import { GENDER_ARRAY } from '@/enums';
+import CustomNavbar from '@/components/custom-navbar/index.vue';
 
 definePage({
   style: {
@@ -104,7 +105,7 @@ onLoad(async () => {
 
 <template>
   <view class="page-container px-32rpx">
-    <wd-navbar fixed placeholder title="嘉盛石化·我的" safeAreaInsetTop></wd-navbar>
+    <CustomNavbar fixed placeholder title="嘉盛石化·我的" safeAreaInsetTop></CustomNavbar>
     <view class="p-32rpx">
       <Logo></Logo>
     </view>

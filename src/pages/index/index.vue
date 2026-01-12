@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import CustomNavbar from '@/components/custom-navbar/index.vue';
 import { getAnnouncementApi } from '@/api/home';
 import { useThemeStore } from '@/store';
 import { uniNavigateTo } from '@/utils';
@@ -19,11 +20,11 @@ definePage({
 const themeStore = useThemeStore();
 
 const noticeColor = computed(() => {
-  if(themeStore.theme === 'dark') {
-    return '#fff'
+  if (themeStore.theme === 'dark') {
+    return '#fff';
   }
-  return '#000'
-})
+  return '#000';
+});
 
 const message = ref('');
 
@@ -73,29 +74,28 @@ function goPage(item: IModule) {
 }
 
 async function goNotice() {
-  await uniNavigateTo('/pages/notice/index')
+  await uniNavigateTo('/pages/notice/index');
 }
-
 </script>
 
 <template>
   <view class="page-container">
-    <wd-navbar fixed placeholder title="嘉盛石化·首页" safeAreaInsetTop></wd-navbar>
+    <CustomNavbar fixed placeholder title="嘉盛石化·首页" safeAreaInsetTop></CustomNavbar>
     <!-- 滚动公告 -->
-    <view class="notice-bar">
-      <wd-notice-bar custom-class="rounded-0! text-24rpx!" :text="message" :color="noticeColor" background-color="transparent" @click="goNotice">
+    <view class="notice-bar" @click="goNotice">
+      <wd-notice-bar
+        custom-class="rounded-0! text-24rpx!"
+        :text="message"
+        :color="noticeColor"
+        background-color="transparent"
+      >
         <template #prefix>公告：</template>
       </wd-notice-bar>
     </view>
 
     <!-- 首页模块 -->
     <view class="grid grid-cols-3 p-32rpx gap-32rpx">
-      <view
-        v-for="item in modules"
-        :key="item.key"
-        class="module"
-        @click="goPage(item)"
-      >
+      <view v-for="item in modules" :key="item.key" class="module" @click="goPage(item)">
         <image class="size-50rpx mb-15rpx" :src="item.icon"></image>
         <text class="text-26rpx">{{ item.title }}</text>
       </view>

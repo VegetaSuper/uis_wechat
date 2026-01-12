@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import CustomNavbar from '@/components/custom-navbar/index.vue';
+
 defineOptions({
   name: 'Task'
 });
@@ -13,7 +15,7 @@ definePage({
 
 <template>
   <view class="page-container">
-    <wd-navbar fixed placeholder title="嘉盛石化·我的任务" safeAreaInsetTop></wd-navbar>
+    <CustomNavbar fixed placeholder title="嘉盛石化·我的任务" safeAreaInsetTop></CustomNavbar>
   </view>
 </template>
 

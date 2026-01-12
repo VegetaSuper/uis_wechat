@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { uniNavigateBack } from '@/utils';
+import CustomNavbar from '@/components/custom-navbar/index.vue';
 
 defineOptions({
   name: 'AddTask'
@@ -15,14 +16,14 @@ definePage({
 
 <template>
   <view class="page-container">
-    <wd-navbar
+    <CustomNavbar
       left-arrow
       fixed
       placeholder
       title="嘉盛石化·发起审批"
       safeAreaInsetTop
       @click-left="uniNavigateBack"
-    ></wd-navbar>
+    ></CustomNavbar>
   </view>
 </template>
 
