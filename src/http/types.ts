@@ -5,6 +5,8 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>;
   /** 出错时是否隐藏错误提示 */
   hideErrorToast?: boolean;
+  /** 是否是重试请求 */
+  _isRetry?: boolean;
 } & IUniUploadFileOptions; // 添加uni.uploadFile参数类型
 
 // 通用响应格式

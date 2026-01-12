@@ -14,7 +14,7 @@ const isDev = import.meta.env.DEV;
   <wd-navbar v-bind="$attrs" custom-class="custom-navber" @click-left="emit('click-left')">
     <template #right v-if="isDev">
       <view>
-        <text class="bg-#ff0000 px-10rpx rounded-20rpx text-[24rpx]">试运行</text>
+        <text class="bg-#ff0000 text-white px-10rpx py-4rpx rounded-20rpx text-[24rpx]">试运行</text>
       </view>
     </template>
   </wd-navbar>

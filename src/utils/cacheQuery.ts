@@ -1,5 +1,5 @@
 import { useQueryStore } from '@/store'
-import { SYSTEM_CACHE_QUERY } from '@/enums/query'
+import { SYSTEM_CACHE_QUERY } from '@/enums'
 
 /**
  * 获取系统缓存数据

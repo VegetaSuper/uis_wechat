@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { SYSTEM_CACHE_QUERY } from '@/enums/query'
+import { SYSTEM_CACHE_QUERY } from '@/enums'
 import { getSystemCacheQueryApi } from '@/api/common';
 import { ICacheUuery } from '@/typings';
 

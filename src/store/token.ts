@@ -17,12 +17,17 @@ export const useTokenStore = defineStore(
     const tokenInfo = ref<IAuthLoginRes>({ ...tokenInfoState });
     // 设置用户信息
     const setTokenInfo = (val: IAuthLoginRes) => {
-      tokenInfo.value = val;
-      // 默认存储一小时
-      const expiresIn = val.expiresIn || 60 *60
-      // 计算并存储过期时间
-      const expireTime = Date.now() + (expiresIn * 1000);
-      uni.setStorageSync('accessTokenExpireTime', expireTime);
+      const input = Number(val.expiresIn) || 0;
+      // 如果是 0/未传 -> 默认 1 小时（秒）
+      const defaultSeconds = 60 * 60;
+      const secs = input || defaultSeconds;
+      // 如果输入值看起来像 ms（> 1e12），直接当作到期时间戳，否则按秒转换为到期时间戳（ms）
+      const expiresAt = input > 1e12 ? input : Date.now() + secs * 1000;
+
+      tokenInfo.value = {
+        token: val.token,
+        expiresIn: expiresAt
+      };
     };
 
     /**
@@ -30,7 +35,8 @@ export const useTokenStore = defineStore(
      */
     const isTokenExpired = computed(() => {
       const now = Date.now();
-      const expireTime = uni.getStorageSync('accessTokenExpireTime');
+      const expireTime = tokenInfo.value.expiresIn
+
       // 空表示永不过期
       if (!expireTime) return false;
       return now >= expireTime;
@@ -41,8 +47,6 @@ export const useTokenStore = defineStore(
         token: '',
         expiresIn: 0
       };
-      // 清除存储的过期时间
-      uni.removeStorageSync('accessTokenExpireTime');
       uni.reLaunch({ url: LOGIN_PAGE });
     }
 
@@ -52,15 +56,9 @@ export const useTokenStore = defineStore(
     const logout = () => {
       // 无论成功失败，都需要清除本地token信息
       const userStore = useUserStore();
-      tokenInfo.value = {
-        token: '',
-        expiresIn: 0
-      };
       userStore.removeUserInfo();
 
-      // 清除存储的过期时间
-      uni.removeStorageSync('accessTokenExpireTime');
-      uni.reLaunch({ url: LOGIN_PAGE });
+      clearToken()
     };
 
     /**

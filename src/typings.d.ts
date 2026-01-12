@@ -10,19 +10,17 @@ declare global {
     success: boolean;
   }
 
-  interface IRows<T> {
-    [key: string]: any; // 允许其他扩展字段
+  export interface IListResult<T> {
+    list: T[];
+    page: number;
+    size: number;
     total: number;
-    rows: T[];
-    code: number;
-    msg: string;
   }
 
-  interface IQueryData {
-    [key: string]: any;
-    loading: boolean;
-    state: 'loading' | 'error' | 'finished';
-    hasMore: boolean;
+  export interface IListParams {
+    page: number;
+    size: number;
+    [key: string]: any; // 允许其他扩展字段
   }
 
   // uni.uploadFile文件上传参数
@@ -161,4 +159,4 @@ declare global {
   }
 }
 
-export {}; // 防止模块污染
+export { }; // 防止模块污染

@@ -1,6 +1,6 @@
 import { http } from '@/http/http';
-import { IWechatInitResult } from '@/typings';
-import type { SYSTEM_CACHE_QUERY } from '@/enums/query'
+import { IFileAttachmentsQuery, IFileQuery, IWechatInitResult } from '@/typings';
+import type { SYSTEM_CACHE_QUERY } from '@/enums'
 
 /**
  * 通过logincode 从后台换取 openId, sessionKey, unionId
@@ -18,4 +18,29 @@ export const wechatInit = (code: string) => {
  */
 export function getSystemCacheQueryApi(cacheField: SYSTEM_CACHE_QUERY) {
   return http.post<any[]>('/system/cache/query', { cacheField })
+}
+
+interface FileAttachment {
+  fileType: string;
+  id: string;
+  url: string;
+  fileName: string;
+}
+
+/**
+ * 获取附件列表
+ * @param data 
+ * @returns 
+ */
+export function getFileAttachmentsApi(data: IFileAttachmentsQuery) {
+  return http.post<FileAttachment[]>('/file/fileAttachments/list', data)
+}
+
+/**
+ * 根据id获取附件
+ * @param data 
+ * @returns 
+ */
+export function getFileApi(data: IFileQuery) {
+  return http.post<FileAttachment>('/file/fileAttachments/listFileById', data)
 }

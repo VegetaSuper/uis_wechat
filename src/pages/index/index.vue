@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import CustomNavbar from '@/components/custom-navbar/index.vue';
-import { getAnnouncementApi } from '@/api/home';
+import { getNoticeApi } from '@/api/notice';
 import { useThemeStore } from '@/store';
 import { uniNavigateTo } from '@/utils';
 
@@ -29,7 +29,7 @@ const noticeColor = computed(() => {
 const message = ref('');
 
 onShow(async () => {
-  const data = await getAnnouncementApi();
+  const data = await getNoticeApi({ page: 1, size: 1 });
   if (data && data.list) {
     message.value = data.list[0]?.topic;
   }

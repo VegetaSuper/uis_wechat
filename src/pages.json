@@ -80,6 +80,14 @@
       }
     },
     {
+      "path": "pages/notice/detail",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "嘉盛石化·公告详情"
+      }
+    },
+    {
       "path": "pages/notice/index",
       "type": "page",
       "style": {

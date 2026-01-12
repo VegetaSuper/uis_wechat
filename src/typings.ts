@@ -19,12 +19,18 @@ export interface IWechatInitResult {
   session_key: string;
 }
 
-export interface IListResult<T> {
-  list: T[];
-  page: number;
-  size: number;
-  total: number;
+export interface IFileAttachmentsQuery {
+  tableCode: string;
+  tableId: number;
+  use: string;
+  system: string
 }
+
+export interface IFileQuery {
+  id: string;
+  system: string
+}
+
 
 /**
  * 登录返回的信息，其实就是 token 信息

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useQueryStore, useUserStore } from '@/store';
 import Logo from '@/components/logo/index.vue';
-import { SYSTEM_CACHE_QUERY } from '@/enums/query';
+import { SYSTEM_CACHE_QUERY } from '@/enums';
 import { getUserDetailApi } from '@/api/login';
 import type { ICacheUuery } from '@/typings';
-import { GENDER_ARRAY } from '@/enums';
+import { GENDER_ARRAY } from '@/enums/enums';
 import CustomNavbar from '@/components/custom-navbar/index.vue';
 
 definePage({
@@ -73,9 +73,9 @@ onLoad(async () => {
   }
   const user = await getUserDetailApi(userStore.userInfo?.id);
 
-  const companys = (await getSystemCacheQuery(SYSTEM_CACHE_QUERY.company, 'map')) as queryMap;
-  const roles = (await getSystemCacheQuery(SYSTEM_CACHE_QUERY.role, 'map')) as queryMap;
-  const departments = (await getSystemCacheQuery(SYSTEM_CACHE_QUERY.department, 'map')) as queryMap;
+  const companys = (await getSystemCacheQuery(SYSTEM_CACHE_QUERY.COMPANY, 'map')) as queryMap;
+  const roles = (await getSystemCacheQuery(SYSTEM_CACHE_QUERY.ROLE, 'map')) as queryMap;
+  const departments = (await getSystemCacheQuery(SYSTEM_CACHE_QUERY.DEPARTMENT, 'map')) as queryMap;
 
   // 公司/部门 组合
   const companyDeptList: string[] = [];

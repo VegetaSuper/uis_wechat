@@ -1,13 +1,78 @@
-import type { CustomRequestOptions } from '@/http/types';
-import { LOGIN_PAGE } from '@/router/config';
-import { useTokenStore } from '@/store/token';
-import { currRoute, uniNavigateTo } from '@/utils';
-import { useGlobalToast } from '@/composables/useGlobalToast';
+import type { CustomRequestOptions } from '@/http/types'
+import { useGlobalToast } from '@/composables/useGlobalToast'
+import { LOGIN_PAGE } from '@/router/config'
+import { useTokenStore, useUserStore } from '@/store'
+import { currRoute, uniNavigateTo } from '@/utils'
+
+// 模块级重试状态
+let reloginPromise: Promise<void> | null = null
+let retryQueue: Array<{
+  options: CustomRequestOptions
+  resolve: (res: any) => void
+  reject: (err: any) => void
+}> = []
+
+/**
+ * 统一处理登出及跳转
+ */
+async function handleLogout() {
+  const tokenStore = useTokenStore()
+  if (tokenStore.isLoggingOut)
+    return
+
+  tokenStore.setIsLoggingOut(true)
+  tokenStore.logout()
+  const { path } = currRoute()
+  if (path !== LOGIN_PAGE) {
+    await uniNavigateTo(LOGIN_PAGE)
+  }
+  tokenStore.setIsLoggingOut(false)
+}
+
+/**
+ * 触发重登录并重放队列中的请求
+ */
+async function triggerReloginAndReplay() {
+  if (reloginPromise)
+    return reloginPromise
+
+  const userStore = useUserStore()
+  // 检查用户信息是否存在
+  if (!userStore.userInfo?.tellphone) {
+    const err = new Error('未登录')
+    handleLogout()
+    retryQueue.forEach(q => q.reject(err))
+    retryQueue = []
+    return Promise.reject(err)
+  }
+
+  reloginPromise = userStore
+    .login(userStore.userInfo.tellphone, false)
+    .then(() => {
+      // 登录成功，重放所有请求
+      const currentQueue = [...retryQueue]
+      retryQueue = []
+      currentQueue.forEach((q) => {
+        http({ ...q.options, _isRetry: true }).then(q.resolve).catch(q.reject)
+      })
+    })
+    .catch((err) => {
+      // 登录失败，清理队列
+      handleLogout()
+      retryQueue.forEach(q => q.reject(err))
+      retryQueue = []
+      throw err
+    })
+    .finally(() => {
+      reloginPromise = null
+    })
+
+  return reloginPromise
+}
 
 export function http<T>(options: CustomRequestOptions) {
-  // 1. 返回 Promise 对象
   return new Promise<T>((resolve, reject) => {
-    const toast = useGlobalToast();
+    const toast = useGlobalToast()
 
     uni.request({
       ...options,
@@ -15,68 +80,43 @@ export function http<T>(options: CustomRequestOptions) {
       // #ifndef MP-WEIXIN
       responseType: 'json',
       // #endif
-      // 响应成功
       success: async (res) => {
-        const resData: IResData<T> = res.data as IResData<T>;
+        const resData = res.data as IResData<T>
+        const is401 = res.statusCode === 401 || (resData && resData.code === 401)
 
-        // 状态码 2xx，参考 axios 的设计
+        // 1. 处理登录失效
+        if (is401) {
+          if (options._isRetry) {
+            handleLogout()
+            return reject(res)
+          }
+          // 加入重试队列并触发静默重登录
+          retryQueue.push({ options, resolve, reject })
+          triggerReloginAndReplay().catch(() => {})
+          return
+        }
+
+        // 2. 处理 HTTP 成功状态
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          let msg = resData.message || '请求错误';
-          if (resData.success) {
-            return resolve(resData.content);
-          } else {
-            // 登录超时
-            if ([401].includes(resData.code)) {
-              const tokenStore = useTokenStore();
-
-              if (!tokenStore.isLoggingOut) {
-                // 清理用户信息，跳转到登录页
-                // 设置退出状态为true（加锁）
-                tokenStore.setIsLoggingOut(true);
-                tokenStore.logout();
-                const { path: currentPath } = currRoute();
-                if (currentPath !== LOGIN_PAGE) {
-                  await uniNavigateTo(LOGIN_PAGE)
-                  tokenStore.setIsLoggingOut(false)
-                } else {
-                  // 已在登录页，直接解锁
-                  tokenStore.setIsLoggingOut(false);
-                }
-              }
-            }
-
-            toast.error(msg);
-            return reject(msg);
+          if (resData?.success) {
+            return resolve(resData.content)
           }
+          // 业务错误
+          const msg = resData?.message || '请求错误'
+          !options.hideErrorToast && toast.error(msg)
+          return reject(msg)
         }
-        if (res.statusCode === 401 || resData.code === 401) {
-          const tokenStore = useTokenStore();
-          if (!tokenStore.isLoggingOut) {
-            // 加锁
-            tokenStore.setIsLoggingOut(true);
-            tokenStore.logout();
-            const { path: currentPath } = currRoute();
-            if (currentPath !== LOGIN_PAGE) {
-              await uniNavigateTo(LOGIN_PAGE)
-              tokenStore.setIsLoggingOut(false)
-            } else {
-              tokenStore.setIsLoggingOut(false);
-            }
-            return reject(res);
-          }
-        } else {
-          // 其他错误 -> 根据后端错误信息轻提示
-          !options.hideErrorToast && toast.error((res.data as IResData<T>).message || '请求错误');
-          reject(res);
-        }
+
+        // 3. 其他错误
+        !options.hideErrorToast && toast.error(resData?.message || '请求错误')
+        reject(res)
       },
-      // 响应失败
-      fail(err) {
-        toast.error('网络错误，换个网络试试');
-        reject(err);
-      }
-    });
-  });
+      fail: (err) => {
+        toast.error('网络错误，换个网络试试')
+        reject(err)
+      },
+    })
+  })
 }
 
 /**
@@ -90,15 +130,15 @@ export function httpGet<T>(
   url: string,
   query?: Record<string, any>,
   header?: Record<string, any>,
-  options?: Partial<CustomRequestOptions>
+  options?: Partial<CustomRequestOptions>,
 ) {
   return http<T>({
     url,
     query,
     method: 'GET',
     header,
-    ...options
-  });
+    ...options,
+  })
 }
 
 /**
@@ -114,7 +154,7 @@ export function httpPost<T>(
   data?: Record<string, any>,
   query?: Record<string, any>,
   header?: Record<string, any>,
-  options?: Partial<CustomRequestOptions>
+  options?: Partial<CustomRequestOptions>,
 ) {
   return http<T>({
     url,
@@ -122,8 +162,8 @@ export function httpPost<T>(
     data,
     method: 'POST',
     header,
-    ...options
-  });
+    ...options,
+  })
 }
 /**
  * PUT 请求
@@ -133,7 +173,7 @@ export function httpPut<T>(
   data?: Record<string, any>,
   query?: Record<string, any>,
   header?: Record<string, any>,
-  options?: Partial<CustomRequestOptions>
+  options?: Partial<CustomRequestOptions>,
 ) {
   return http<T>({
     url,
@@ -141,8 +181,8 @@ export function httpPut<T>(
     query,
     method: 'PUT',
     header,
-    ...options
-  });
+    ...options,
+  })
 }
 
 /**
@@ -152,23 +192,23 @@ export function httpDelete<T>(
   url: string,
   query?: Record<string, any>,
   header?: Record<string, any>,
-  options?: Partial<CustomRequestOptions>
+  options?: Partial<CustomRequestOptions>,
 ) {
   return http<T>({
     url,
     query,
     method: 'DELETE',
     header,
-    ...options
-  });
+    ...options,
+  })
 }
 
-http.get = httpGet;
-http.post = httpPost;
-http.put = httpPut;
-http.delete = httpDelete;
+http.get = httpGet
+http.post = httpPost
+http.put = httpPut
+http.delete = httpDelete
 
-http.Get = httpGet;
-http.Post = httpPost;
-http.Put = httpPut;
-http.Delete = httpDelete;
+http.Get = httpGet
+http.Post = httpPost
+http.Put = httpPut
+http.Delete = httpDelete
