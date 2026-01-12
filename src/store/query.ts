@@ -16,6 +16,9 @@ export const useQueryStore = defineStore('query', () => {
       list = list.map(item => {
         // 可扩展
         return {
+          avatar: item.avatar,
+          loginName: item.loginName,
+          avatarPath: item.avatarPath,
           value: item.id,
           label: item.name,
           name: item.name,

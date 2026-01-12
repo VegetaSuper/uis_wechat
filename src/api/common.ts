@@ -20,6 +20,15 @@ export function getSystemCacheQueryApi(cacheField: SYSTEM_CACHE_QUERY) {
   return http.post<any[]>('/system/cache/query', { cacheField })
 }
 
+/**
+ * 获取系统字典数据
+ * @param keys 
+ * @returns 
+ */
+export function getSystemDataDict(keys: string) {
+  return http.post<any[]>('/system/dataDict/listDataDict', { keys })
+}
+
 interface FileAttachment {
   fileType: string;
   id: string;

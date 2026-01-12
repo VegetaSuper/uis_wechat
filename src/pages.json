@@ -106,6 +106,14 @@
       }
     },
     {
+      "path": "pages/task/detail",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "嘉盛石化·任务详情"
+      }
+    },
+    {
       "path": "pages/task/index",
       "type": "page",
       "style": {
