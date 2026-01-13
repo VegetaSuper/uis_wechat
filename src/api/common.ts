@@ -53,3 +53,14 @@ export function getFileAttachmentsApi(data: IFileAttachmentsQuery) {
 export function getFileApi(data: IFileQuery) {
   return http.post<FileAttachment>('/file/fileAttachments/listFileById', data)
 }
+
+/**
+ * 获取内部用户
+ * @param data 
+ * @returns 
+ */
+export function getInnerUsersApi(data: IListParams) {
+  console.log('aas', data);
+  
+  return http.post<IListResult<any>>('/system/user/inner/list', data)
+}
